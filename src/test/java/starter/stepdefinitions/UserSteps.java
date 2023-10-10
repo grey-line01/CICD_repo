@@ -32,5 +32,15 @@ public class UserSteps {
         get.validateAllPostDate();
     }
 
+    @Given("I set another GET endpoint")
+    public void setAnotherApiEndpoints(){get.setAnotherApiEndpoints();
+    }
 
+    @When("I send GET method")
+    public void sendGetMethod(){get.sendGetMethod();
+    }
+
+    @And("I receive a specific post data by ID")
+    public void validateSpecificPostData(){get.validateSpecificPostData();
+    }
 }
