@@ -5,6 +5,7 @@ import net.serenitybdd.rest.SerenityRest;
 import net.thucydides.core.annotations.Step;
 
 import static net.serenitybdd.rest.SerenityRest.restAssuredThat;
+import static org.hamcrest.Matchers.equalTo;
 
 public class Get {
     protected static String url = "https://jsonplaceholder.typicode.com/";
@@ -33,5 +34,29 @@ public class Get {
     public void validateAllPostDate(){
         String responseBody = SerenityRest.then().extract().asString();
         System.out.println("Response Body:\n" + responseBody);
+    }
+
+    @Step("I set another GET endpoint")
+    public String setAnotherApiEndpoints(){
+        return url + "posts/1";
+
+    }
+
+    @Step("I send GET method")
+    public void sendGetMethod(){
+        SerenityRest.given()
+                .when()
+                .get(setAnotherApiEndpoints());
+
+    }
+
+    @Step("I receive a specific post data by ID")
+    public void validateSpecificPostData(){
+
+        restAssuredThat(response -> response.body("userId", equalTo(1)));
+        restAssuredThat(response -> response.body("id", equalTo(1)));
+        restAssuredThat(response -> response.body("title", equalTo("sunt aut facere repellat provident occaecati excepturi optio reprehenderit")));
+        restAssuredThat(response -> response.body("body", equalTo("quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto")));
+
     }
 }
